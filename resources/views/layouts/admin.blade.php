@@ -16,8 +16,8 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-inverse navbar-static-top">
-        <div class="container">
+    <nav class="navbar navbar-inverse navbar-static-top" style="
+		 background: #191d29;border-color: #272a38;margin-bottom: 0;">
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->
@@ -41,7 +41,7 @@
                 </ul>
 
                 <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" style="margin:0;">
                     <!-- Authentication Links -->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -69,10 +69,22 @@
                         </li>
                 </ul>
             </div>
-        </div>
     </nav>
 
-    @yield('content')
+    <div class="col-sm-3 col-md-2 navbar-fixed-left" style="
+		 background: #191d29;
+		 height: 1200px;
+		 ">
+        <div class="row">
+            sidebar
+        </div>
+
+    </div>
+    <div class="col-sm-10 col-sm-10"style="
+		 padding-top: 50px;
+		 ">
+        @yield('content')
+    </div>
 </div>
 
 <!-- Scripts -->
