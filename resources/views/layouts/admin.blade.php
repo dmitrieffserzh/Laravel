@@ -16,7 +16,7 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-inverse navbar-static-top" style="
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="
 		 background: #191d29;border-color: #272a38;margin-bottom: 0;">
             <div class="navbar-header">
 
@@ -80,7 +80,7 @@
         </div>
 
     </div>
-    <div class="col-sm-10 col-sm-10"style="
+    <div class="col-sm-9 col-md-10"style="
 		 padding-top: 50px;
 		 ">
         @yield('content')
