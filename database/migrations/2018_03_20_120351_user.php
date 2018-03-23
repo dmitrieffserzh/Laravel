@@ -12,7 +12,7 @@ class User extends Migration
      * @return void
      */
 	public function up(){
-		Schema::table('users',function ($table){
+		Schema::table('users',function (Blueprint $table){
 			$table->integer('is_admin')->after('remember_token')->default('0');
 		});
 	}
