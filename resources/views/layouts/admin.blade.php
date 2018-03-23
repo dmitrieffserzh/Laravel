@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+
 </head>
 <body>
 <div id="app">
@@ -28,7 +29,7 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ route('admin') }}">
+                <a class="navbar-brand" href="{{ route('admin.index') }}">
                     {{ config('app.name', 'Laravel') }} Admin
                 </a>
             </div>

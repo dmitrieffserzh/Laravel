@@ -53,7 +53,7 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{{ route('admin') }}">
+                                        <a href="{{ route('admin.index') }}">
                                             Панель управления
                                         </a>
                                     </li>
