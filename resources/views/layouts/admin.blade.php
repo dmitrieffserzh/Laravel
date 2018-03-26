@@ -76,7 +76,15 @@
 		 height: 1200px;
 		 ">
         <div class="row">
-            sidebar
+            <br>
+            <br>
+            <br>
+            <a class="" href="{{ route('category.index') }}">
+                Категории
+            </a>
+            <a class="" href="{{ route('pages.index') }}">
+                Страницы
+            </a>
         </div>
 
     </div>

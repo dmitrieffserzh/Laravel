@@ -17,7 +17,7 @@
     >
         {!! $delimiter or "" !!}{{$category_list->title or ""}}
     </option>
-
+    <hr>
     @if (count($category_list->children) > 0)
 
         @include('admin.category.partials.category', [
