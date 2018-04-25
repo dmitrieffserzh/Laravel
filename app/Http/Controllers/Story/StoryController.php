@@ -34,9 +34,6 @@ class StoryController extends Controller
 		}
 	}
 
-
-
-
 	//Image uploader
 	public function upload(Request $request) {
 		$path =  public_path().'\images\\';
