@@ -9,8 +9,29 @@
 @import "grid.css";
 
 // Bootstrap
-//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 html {
   background: #fff;
+}
+
+
+
+
+.form_list {
+  &__content {
+    display: none;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 34px;
+    max-height: 400px;
+    visibility: hidden;
+    @include single-transition(all, .3s, linear, 0s);
+    &--open {
+      display: block;
+      visibility: visible;
+      opacity: 1;
+    }
+  }
 }

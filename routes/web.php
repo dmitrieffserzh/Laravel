@@ -38,3 +38,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
 //	Route::get('/pages/create', 'Admin\PageController@create')->name('pages.create');
 //	Route::get('/pages/{id}/edit', 'Admin\PageController@edit')->name('pages.edit');
 });
+
+Route::get('/story', 'Story\StoryController@index')->name('story.index');
+Route::post('/story/create_in_list', 'Story\StoryController@createInList')->name('story.create_in_list');
+Route::post('upload','Story\StoryController@upload')->name('upload');
