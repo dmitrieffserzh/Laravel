@@ -17,7 +17,7 @@
     // };
     $.fn.cleanHtml = function () {
         var html = $(this).html();
-        return html && html.replace(/(<br>|\s|<p><br><\/p>|&nbsp;)*$/, '');
+        return /*html &&*/ html.replace(/(<br>|\s|<div><br><\/div>|&nbsp;|style=""|''|<pre.*>)/, '');
     };
     $.fn.wysiwyg = function (userOptions) {
         var editor = this,
@@ -212,7 +212,7 @@
         activeToolbarClass: 'btn-info',
         selectionMarker: 'edit-focus-marker',
         selectionColor: 'darkgrey',
-        dragAndDropImages: true,
+        dragAndDropImages: true
         //fileUploadError: function (reason, detail) { console.log("File upload error", reason, detail); },
     };
 }(window.jQuery));
