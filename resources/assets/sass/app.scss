@@ -27,6 +27,7 @@ html {
     min-height: 34px;
     max-height: 400px;
     visibility: hidden;
+    box-shadow: 0 0 2px 0 #000;
     @include single-transition(all, .3s, linear, 0s);
     &--open {
       display: block;

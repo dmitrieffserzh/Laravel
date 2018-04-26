@@ -23,10 +23,11 @@ class StoryController extends Controller
 			]);
 	}
 
+	// CREATE POST IN LIST
 	public function createInList(Request $request) {
 
 		if($request->ajax()) {
-			Story::create( $request->all() );
+			Story::create($request->all());
 
 			return response()->json(['code'=>200,'success' => 'Your inquire is successfully sent.']);
 		} else {
@@ -34,13 +35,13 @@ class StoryController extends Controller
 		}
 	}
 
-	//Image uploader
+	// IMAGE UPLOADER
 	public function upload(Request $request) {
-		$path =  public_path().'\images\\';
+		$path =  public_path().'\uploads\images\\';
 		$file = $request->file('file');
 		$filename = str_random(20) .'.' . $file->getClientOriginalExtension() ?: 'png';
 		$img = Image::make($file);
 		$img->save($path . $filename);
-		echo '/images/'.$filename;
+		echo '/uploads/images/'.$filename;
 	}
 }
