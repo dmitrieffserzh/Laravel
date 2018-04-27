@@ -1,7 +1,5 @@
 <div id="form-messages" class="alert success" role="alert" style="display: none;"></div>
-
-<div id="form-messages" class="alert" style="display: none"></div>
-<form id="new_post" enctype="multipart/form-data">
+<form id="new_post">
     {{ csrf_field() }}
 
     <input type="text" class="form-control form_list__title" name="title" placeholder="Опубликовать запись" value="{{$story->title or ""}}" required>
@@ -15,7 +13,6 @@
         <div class="btn-group">
             <a class="btn btn-default" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="icon-picture"></i></a>
             <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage"/>
-            <!--<input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" onchange="sendFile(this.files[0])"/>-->
         </div>
     </div>
 
@@ -52,13 +49,17 @@
             data_array.forEach(function (item) {
                 data[item.name] = item.value;
             });
-            data["content"] = $('#editor').html();
 
+            data["content"] = $('#editor').cleanHtml();
+
+            console.log(data["content"]);
             //SEND FORM
+
             $.ajax({
+                data: data,
                 type: 'POST',
                 url: '/story/create_in_list',
-                data: data,
+                DataType: 'text',
                 success: function (result) {
                     alert.removeClass('alert-danger');
                     alert.addClass('alert-success');
@@ -66,7 +67,7 @@
                     alert.show();
                      setTimeout(function () {
                          alert.hide();
-                         location.reload();
+                         //location.reload();
                      }, 5000)
                 },
                 error: function (result) {

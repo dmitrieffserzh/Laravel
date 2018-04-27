@@ -16,8 +16,14 @@
     //     return loader.promise();
     // };
     $.fn.cleanHtml = function () {
-        var html = $(this).html();
-        return /*html &&*/ html.replace(/(<br>|\s|<div><br><\/div>|&nbsp;|style=""|''|<pre.*>)/, '');
+        var html = $(this)[0].innerHTML;
+
+        return html
+            .replace(/<(\b(?!(a|img|b|i|ul|ol|li))[^>\s]*)(.*?)(\s*\/?>)/, '<p>')
+            .replace(/<(\/)(\b(?!(\/a|\/img|\/b|\/i|\/ul|\/ol|\/li))[^>\s]*)(.*?)(\s*\/?>)/, '</p>')
+            .replace(/<(use|svg)(\b(?!!)[^>\s]*)(.*?)(\s*\/?>)/, '')
+            .replace(/<(\/use|\/svg)(\b(?!!)[^>\s]*)(.*?)(\s*\/?>)/, '')
+            .replace(/\u00A0/g, '');
     };
     $.fn.wysiwyg = function (userOptions) {
         var editor = this,
@@ -83,7 +89,6 @@
             },
             insertFiles = function (files) {
                     editor.focus();
-
                         var data = new FormData();
                         data.append("file", files[0]);
                         $.ajax({
