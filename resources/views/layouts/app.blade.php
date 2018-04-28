@@ -14,8 +14,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/jqHotkeys.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-wysiwyg.js') }}"></script>
+    @stack('custom-scripts')
 </head>
 <body>
     <div id="app">

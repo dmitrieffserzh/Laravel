@@ -114,8 +114,8 @@ class Qevix
         foreach($tags as $tag)
         {
             if(!isset($this->tagsRules[$tag]) AND !$createIfNoExists) {
-               // throw new Exception("Тег ".$tag." отсутствует в списке разрешённых тегов");
-                echo "Тег ".$tag." отсутствует в списке разрешённых тегов";
+                // throw new Exception("Тег ".$tag." отсутствует в списке разрешённых тегов");
+                //  echo "Тег ".$tag." отсутствует в списке разрешённых тегов";
             }
 
             $this->tagsRules[$tag][$flag] = $value;

@@ -1,23 +1,38 @@
+@push('custom-scripts')
+    <script src="{{ asset('js/jqHotkeys.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-wysiwyg.js') }}"></script>
+@endpush
+
 <div id="form-messages" class="alert success" role="alert" style="display: none;"></div>
 <form id="new_post">
     {{ csrf_field() }}
 
-    <input type="text" class="form-control form_list__title" name="title" placeholder="Опубликовать запись" value="{{$story->title or ""}}" required>
+    <div class="editor_box">
+        <input type="text" class="form-control form_list__title" name="title" placeholder="Опубликовать запись" value="{{$story->title or ""}}">
+        <div id="editor" class="editor_box__textarea">{{$story->content or ""}}</div>
 
-    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
-        <div class="btn-group">
-            <a class="btn btn-default" data-edit="bold" title="Bold (Ctrl/Cmd+B)">Bold</a>
-            <a class="btn btn-default" data-edit="italic" title="Italic (Ctrl/Cmd+I)">Italic</a>
-            <a class="btn btn-default" data-edit="underline" title="Underline (Ctrl/Cmd+U)">Underline</a>
-        </div>
-        <div class="btn-group">
-            <a class="btn btn-default" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="icon-picture"></i></a>
-            <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage"/>
+        <div class="btn-toolbar editor_box__toolbar" data-role="editor-toolbar" data-target="#editor">
+            <div class="btn-group">
+                <a class="btn btn-default" data-edit="bold" title="Выделить жирным (Ctrl/Cmd+B)"><i class="glyphicon glyphicon-bold" aria-hidden="true"></i></a>
+                <a class="btn btn-default" data-edit="italic" title="Наклонный (Ctrl/Cmd+I)"><i class="glyphicon glyphicon-italic" aria-hidden="true"></i></a>
+                <a class="btn btn-default" data-edit="underline" title="Подчеркнуть (Ctrl/Cmd+U)"><i class="glyphicon glyphicon-text-color" aria-hidden="true"></i></a>
+            </div>
+
+            <div class="btn-group dropup" role="group">
+                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Вставить ссылку" data-original-title="Hyperlink"><i class="glyphicon glyphicon-link" aria-hidden="true"></i></a>
+                <div class="dropdown-menu input-append">
+                    <input class="span2" placeholder="URL" type="text" data-edit="createLink">
+                    <button class="btn" type="button"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i></button>
+                </div>
+                <a class="btn btn-default" data-edit="unlink" title="" data-original-title="Remove Hyperlink"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i></a>
+            </div>
+
+            <div class="btn-group">
+                <a class="btn btn-image" title="" id="pictureBtn" data-original-title="Insert picture (or just drag &amp; drop)"><i class="glyphicon glyphicon-picture" aria-hidden="true"></i></a>
+                <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" style="opacity: 0; position: absolute; top: 0px; left: 0px; width: 37px; height: 30px;">
+            </div>
         </div>
     </div>
-
-    <div id="editor" class="form_list__content"></div>
-
     <button type="submit" class="btn btn-primary pull-right">
         <i class="glyphicon glyphicon-send"></i>
     </button>
@@ -27,7 +42,7 @@
     $(document).ready(function () {
         // OPEN FORM
         $('.form_list__title').click(function () {
-            $('.form_list__content').addClass('form_list__content--open');
+            $('.editor_box').addClass('editor_box--open');
         });
 
         // EDITOR
@@ -36,7 +51,7 @@
                 'ctrl+b meta+b': 'bold',
                 'ctrl+i meta+i': 'italic',
                 'ctrl+u meta+u': 'underline',
-            },
+            }
         });
 
         // FORM
@@ -52,9 +67,7 @@
 
             data["content"] = $('#editor').cleanHtml();
 
-            console.log(data["content"]);
             //SEND FORM
-
             $.ajax({
                 data: data,
                 type: 'POST',
@@ -63,7 +76,10 @@
                 success: function (result) {
                     alert.removeClass('alert-danger');
                     alert.addClass('alert-success');
-                    alert.text(result);
+                    alert.text(
+                        result.error.customMessages.title.required,
+                        result.error.customMessages.title.min
+                    );
                     alert.show();
                      setTimeout(function () {
                          alert.hide();

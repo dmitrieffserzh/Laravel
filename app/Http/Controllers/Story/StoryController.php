@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Story;
 use App\Extensions\Qevix;
 use Intervention\Image\Facades\Image;
+use Validator;
 
 class StoryController extends Controller
 {
@@ -27,6 +28,9 @@ class StoryController extends Controller
 	// CREATE POST IN LIST
 	public function createInList( Request $request ) {
 
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		$qevix = new Qevix();
 
 		// Задает список разрешенных тегов
@@ -68,15 +72,40 @@ class StoryController extends Controller
 		$qevix->cfgSetTagParamsRequired( 'a', 'href' );
 
 
-		$result = $request->all();
-		$result['content'] = html_entity_decode($request->content, ENT_QUOTES | ENT_HTML5);
-		$result['content'] = $qevix->parse($result['content'], $errors);
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		$rules = array(
+			'title'   => 'required|min:3',
+			'content' => 'required|min:10'
+		);
+
+		$messages = array(
+			'title' => [
+				'required' => 'Заполните подалуйста заголовок!',
+				'min' => 'Содержимое не может быть короче 3x символов!',
+			],
+
+			'content' => 'Заполните подалуйста содержимое поста!|Содержимое не может быть короче 10 символов!'
+		);
+
+		$validator = Validator::make( $request->all(), $rules, $messages);
+
+		$result            = $request->all();
+		$result['content'] = $request['content'];
+		$result['content'] = $qevix->parse( $result['content'], $errors );
+
 		if ( $request->ajax() ) {
-			Story::create( $result );
-			return response()->json( [ 'code' => 200, 'success' => 'Your inquire is successfully sent.' ] );
-		} else {
-			return response()->json( [ 'code' => 200, 'error' => 'Ooops!' ] );
+			if ( $validator->passes() ) {
+				Story::create( $result );
+
+				return response()->json( [ 'success' => 'Запись опубликована!' ] );
+			}
+
+			return response()->json( [ 'error' => $validator] );
 		}
+
+		return false;
+
 	}
 
 	// IMAGE UPLOADER
